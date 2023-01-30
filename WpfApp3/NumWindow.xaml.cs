@@ -22,24 +22,32 @@ namespace WpfApp3
         public NumWindow()
         {
             InitializeComponent();
+
+            //Устанавливаем окно по центру экрана
+            double screenHeight = SystemParameters.FullPrimaryScreenHeight;
+            double screenWidth = SystemParameters.FullPrimaryScreenWidth;
+            this.Top = (screenHeight - this.Height) / 2;
+            this.Left = (screenWidth - this.Width) / 2;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow MN = new MainWindow();
+            AutorizationPage AP = new AutorizationPage();
 
-            if (tbNum.Text == MN.anum) //сравниваем введенное число с фактическим
+            if (tbNum.Text == AutorizationPage.anum) //сравниваем введенное число с фактическим
             {
+
+                //MN.Show();
+                AP.successInp(); //успешная авторизация
+                this.Hide();
                 
-                MN.Show();
-                this.Close();
-                MN.successInp(); //успешная авторизация
             }
             else
             {
-                MN.Show();
-                this.Close();
-                MN.unsuccessInp(); //была допущена ошибка
+                //MN.Show();
+                AP.unsuccessInp(); //была допущена ошибка
+                this.Hide();
+                
             }
 
         }
