@@ -15,7 +15,7 @@
 
             <StackPanel Name="spTm" Orientation="Horizontal" Visibility="Hidden">
                 <TextBlock Name="tblMessage" Margin="0,0,15,5"> Ожидайте, осталось: </TextBlock>
-                <TextBlock Name="tblSec" Margin="0,0,0,5">asdasd</TextBlock>
+                <TextBlock Name="tblSec" Margin="0,0,0,5"></TextBlock>
             </StackPanel>
           
             <Button Name="btnAutorization" Click="btnAutorization_Click">Авторизация</Button>

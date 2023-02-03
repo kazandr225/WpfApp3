@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp3.Classes;
 
 namespace WpfApp3
 {
@@ -45,9 +46,10 @@ namespace WpfApp3
             else
             {
                 //MN.Show();
-                AP.unsuccessInp(); //была допущена ошибка
+                //AP.unsuccessInp(); //была допущена ошибка
                 this.Hide();
-                
+                FrameClass.MainFrame.Navigate(new AutorizationPage(1));
+
             }
 
         }
