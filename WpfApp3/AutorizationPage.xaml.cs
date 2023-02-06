@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using WpfApp3.Classes;
 
 namespace WpfApp3
 {
@@ -20,7 +22,12 @@ namespace WpfApp3
     /// </summary>
     public partial class AutorizationPage : Page
     {
+        DispatcherTimer timer = new DispatcherTimer(); //таймер
+
         public static string anum; //сгенерированное число
+
+        public int sec = 3; //задаем требуемое для ожидания время
+
         public AutorizationPage()
         {
             InitializeComponent();
@@ -29,11 +36,14 @@ namespace WpfApp3
         {
             InitializeComponent();
             spTm.Visibility = Visibility.Visible;
-            unsuccessInp();
-        }
-        
+            btnAutorization.IsEnabled = false;
 
-        public void btnAutorization_Click(object sender, RoutedEventArgs e)
+            timer.Interval = new TimeSpan(0, 0, 1); //устанавливаем интервал в 1 секунду
+            timer.Start(); //запускаем таймер
+            timer.Tick += new EventHandler(unsuccessInp); //по окончанию таймера, метод будет запускаться, обновляя число
+        }
+
+        public void btnAutorization_Click(object sender, RoutedEventArgs e) //собысия на клик по кнопке авторизации 
         {
             NumWindow NW = new NumWindow();
 
@@ -54,8 +64,6 @@ namespace WpfApp3
             {
                 MessageBox.Show("Неверный логин или пароль", "Ошибка ввода", MessageBoxButton.OK); //ошибка при вводе
             }
-
-
         }
 
         public void successInp() //успешный вход
@@ -63,57 +71,22 @@ namespace WpfApp3
             MessageBox.Show("Вы авторизировались", "Поздравляем!", MessageBoxButton.OK);
         }
 
-        public void unsuccessInp() //при входе было допущена ошибка
+        public void unsuccessInp(object sender, EventArgs e) //при входе было допущена ошибка
         {
             
-            MessageBox.Show("Введено неверное значение ожидайте 60 секунд", "Ошибка ввода", MessageBoxButton.OK);
 
-            int sec = 60;
-
-            //for (int i = 1; i < 60; i++)
-            //{
-            //    sec --;
-            //    tblSec.Text = sec.ToString();
-            //}
-            //spTm.Visibility = Visibility.Hidden;
-
-            //for (int i = 0; i < 60; i++) 
-            //{ 
-            //    if (sec <= 0) 
-            //    { 
-            //        sec--; tblSec.Text = sec.ToString(); 
-            //    } 
-            //}
-            //MessageBox.Show("Отсчет завершен", "Дада", MessageBoxButton.OK); 
-            //spTm.Visibility = Visibility.Hidden;
-
-            //if (sec >= 0)
-            //{
-            //    sec--;
-            //    tblSec.Text = sec.ToString();
-            //}
-
-            //else
-            //{
-            //    MessageBox.Show("Отсчет завершен", "Дада", MessageBoxButton.OK);
-            //    spTm.Visibility = Visibility.Hidden;
-            //}
-
-            for (int i = 0; i >= 60; i++)
+            if (sec != 0)
             {
-                
-                //if (sec >= 0)
-                //{
-                //    sec--;
-                //    tblSec.Text = sec.ToString();
-                //}
-                sec--;
                 tblSec.Text = sec.ToString();
-
+                sec--;
             }
-            MessageBox.Show("Отсчет завершен", "Дада", MessageBoxButton.OK);
-            spTm.Visibility = Visibility.Hidden;
 
+            else 
+            {
+                timer.Stop(); //останавливаем работу таймера
+                FrameClass.MainFrame.Navigate(new AutorizationPage()); //открываем страницу без таймера и с активированной кнопкой
+                MessageBox.Show("Отсчет закончен", "Повторите ввод!", MessageBoxButton.OK);
+            }
         }
     }
 }
