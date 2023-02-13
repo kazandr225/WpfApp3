@@ -9,6 +9,8 @@
       Title="CAPTCHAPage">
 
     <Grid>
-        
+        <Canvas Name="Container" Background="AliceBlue" Width="300" Height="300" ClipToBounds="True">
+            <TextBox Name="tbCap" TextChanged="tbCap_TextChanged" Canvas.Left="50" Canvas.Bottom="20" Width="200"></TextBox>
+        </Canvas>
     </Grid>
 </Page>

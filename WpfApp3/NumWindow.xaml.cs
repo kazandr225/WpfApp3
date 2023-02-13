@@ -37,7 +37,7 @@ namespace WpfApp3
             this.Left = (screenWidth - this.Width) / 2;
 
 
-            timercode.Interval = new TimeSpan(0, 0, 10); //устанавливаем интеврвал в 10 секунд для введения кода
+            timercode.Interval = new TimeSpan(0, 1, 0); //устанавливаем интеврвал для введения кода
             timercode.Start(); //запускаем таймер
             timercode.Tick += new EventHandler(again);
         }
@@ -69,6 +69,7 @@ namespace WpfApp3
             {
                 inputerror = 0; //сбрасываем значание
                 FrameClass.MainFrame.Navigate(new CAPTCHAPage()); //переходим на станицу с капчей
+                timercode.Stop();
             }
 
             else 
@@ -81,7 +82,6 @@ namespace WpfApp3
                 else
                 {
                     inputerror++; //считаем ошибку
-
                     this.Hide();
                     FrameClass.MainFrame.Navigate(new AutorizationPage(1)); //загрузка страницы в случае ошибки ввода
                 }
